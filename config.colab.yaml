@@ -1,0 +1,45 @@
+sources:
+  cramer:
+    - name: "米国株投資-ジムクレイマー解説"
+      type: "youtube_channel"
+      url: "https://www.youtube.com/@DeepCramerJP/videos"
+      speaker_group: "Jim Cramer"
+      source_kind: "commentary"
+      enabled: true
+      max_items: 3
+      filters: ["ジム", "クレイマー", "Mad Money", "Cramer"]
+    - name: "CNBC Television"
+      type: "youtube_channel"
+      url: "https://www.youtube.com/@CNBCtelevision/videos"
+      speaker_group: "Jim Cramer"
+      source_kind: "official_media"
+      enabled: true
+      max_items: 5
+      filters: ["Jim Cramer", "Cramer", "Mad Money"]
+    - name: "Makabeeの米国株【ジム・クレイマー応援ch】"
+      type: "youtube_channel"
+      url: "https://www.youtube.com/@makabee7/videos"
+      speaker_group: "Jim Cramer"
+      source_kind: "commentary"
+      enabled: true
+      max_items: 3
+      filters: ["ジム", "クレイマー", "Cramer", "Mad Money", "米国株"]
+  dalio:
+    - name: "Principles by Ray Dalio"
+      type: "youtube_channel"
+      url: "https://www.youtube.com/@principlesbyraydalio/videos"
+      speaker_group: "Ray Dalio"
+      source_kind: "official"
+      enabled: true
+      max_items: 3
+      filters: ["Ray Dalio", "Dalio", "Debt", "Debt Cycle", "Economic Machine", "Principles", "How Countries Go Broke"]
+  galloway:
+    - name: "Pivot"
+      type: "podcast"
+      rss_url: ""
+      podcast_search_query: "Pivot Kara Swisher Scott Galloway"
+      speaker_group: "Scott Galloway"
+      source_kind: "official_podcast"
+      enabled: true
+      max_items: 3
+      filters: ["AI", "Big Tech", "OpenAI", "Meta", "Google", "Amazon", "Apple", "Microsoft", "Tesla", "markets", "earnings"]
