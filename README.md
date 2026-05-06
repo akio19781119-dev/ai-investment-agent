@@ -66,3 +66,37 @@
 - 品質チェック失敗時は PDF本番生成/メール送信を停止し、失敗理由を `report_quality_check` とログに出力します。
 - Gmail送信されない場合は `EMAIL_TO`, `SMTP_USER`, `SMTP_PASSWORD`, PDFサイズ(50KB以上), `Quality gate passed` を確認してください。
 - GitHub版ノートブックをColabで再読込する場合は、GitHub URL指定で開き、`Runtime > Restart and run all` を実行してください。
+
+## 字幕・文字起こし優先の発言分析（新方針）
+- 本アプリは**タイトル/説明文中心ではなく、字幕・文字起こし本文中心**で発言分析します。
+- 優先順位は「手動字幕 → 自動字幕 →（設定ON時のみ）音声文字起こし → metadata_only」です。
+- `metadata_only` は本文根拠が弱いため、confidenceは低く扱います。
+
+## debug CSVの見方
+- `statement_units_YYYY-MM-DD.csv`:
+  - 発言単位の主データ。speaker/directness/stance/reason/risk/evidenceを保持。
+- `source_check_YYYY-MM-DD.csv`:
+  - ソース別の取得件数、失敗状態、エラーメッセージ確認用。
+- `extracted_mentions_YYYY-MM-DD.csv`:
+  - 抽出された銘柄・会社・評価の一覧。
+- `mentioned_by_person_YYYY-MM-DD.csv`:
+  - Cramer/Dalio/Pivotの3者横並び比較の基データ。
+
+## dry-run と本番実行
+- dry-run: PDF生成・debug保存まで実施、Gmail送信はしません。
+- 本番: 品質チェック通過 + PDF生成成功時のみGmail送信します（PDF添付のみ）。
+
+## 品質チェック失敗時
+- 本番PDF送信を停止し、失敗理由を `report_quality_check_YYYY-MM-DD.json` とログに残します。
+- 「品質チェック失敗」と画面・ログへ出力します。
+
+## YouTube WARNING の扱い
+- `WARNING: [youtube:tab] Incomplete data received...` は部分失敗として扱い、`ignoreerrors` で継続します。
+- 失敗ソースは `source_check` の `status=failed` と `error_message` を確認してください。
+
+## Gmail送信されない場合の確認
+1. `DRY_RUN` が `False` か
+2. `SEND_EMAIL` が `True` か
+3. `EMAIL_TO`, `SMTP_USER`, `SMTP_PASSWORD` が設定済みか
+4. `Quality gate passed: yes` か
+5. PDFが生成済みか（ログの `PDF generated` / `PDF path`）
