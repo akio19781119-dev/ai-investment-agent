@@ -49,3 +49,20 @@
 ## メール送信とエラー時の動作
 - 本番実行（dry-runでない）かつ `SEND_EMAIL=True` の場合のみ Gmail SMTP 送信。
 - メール送信に失敗しても、PDF保存とログ保存（`logs`）は残る設計です。
+
+## Colab最新版レポート運用（Jim Cramer / Ray Dalio / Scott Galloway）
+- 指定ソース: DeepCramerJP（Cramer解説）, CNBC Television（Cramer/Mad Money直接性高）, Makabee（Cramer解説）, Principles by Ray Dalio（Dalio公式）, Pivot（Scott Galloway関連Podcast）。
+- dry-run: 取得・debug保存・品質チェックまで実行し、品質通過時のみPDF生成。メール送信はしません。
+- 本番実行: 取得・debug保存・品質チェック後、品質通過かつPDFサイズ/認証情報条件を満たした場合のみGmail送信します。
+- debug保存先: `/content/drive/MyDrive/ai-investment-agent/debug/`
+  - `raw_sources_YYYY-MM-DD.json`: 取得生データ
+  - `source_check_YYYY-MM-DD.csv`: ソース別取得件数/失敗原因
+  - `extracted_mentions_YYYY-MM-DD.csv`: 抽出銘柄/会社名
+  - `mentioned_by_person_YYYY-MM-DD.csv`: 3者横並び比較用データ
+  - `report_quality_check_YYYY-MM-DD.json`: 品質ゲート結果
+- `source_check.csv` は `fetched_items_count`, `status`, `error_message` を最初に確認してください。
+- `extracted_mentions.csv` は `validated` が false でも削除せず「要確認」として扱います。
+- `mentioned_by_person.csv` で Cramer / Dalio / Galloway それぞれの stance/reason/source_url を追跡できます。
+- 品質チェック失敗時は PDF本番生成/メール送信を停止し、失敗理由を `report_quality_check` とログに出力します。
+- Gmail送信されない場合は `EMAIL_TO`, `SMTP_USER`, `SMTP_PASSWORD`, PDFサイズ(50KB以上), `Quality gate passed` を確認してください。
+- GitHub版ノートブックをColabで再読込する場合は、GitHub URL指定で開き、`Runtime > Restart and run all` を実行してください。
